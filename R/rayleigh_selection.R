@@ -188,7 +188,8 @@ rayleigh_selection <- function(g2, f, num_perms = 1000, seed = 10, num_cores = 1
           p <- regresion.p.val(score, cov_obs, samples$func_scores[1,], samples$cov_scores[1,,])
           return(p)
         }
-        p.vals <- parallel::mcmapply(worker, R, asplit(f, 1), mc.preschedule = mc.preschedule)
+        p.vals <- parallel::mcmapply(worker, R, asplit(f, 1),
+                                     mc.cores =  num_cores, mc.preschedule = mc.preschedule)
       }else{
         # Sampling values and splitting
         samples <- scorer$sample_with_covariate(f, covariates[finite.cov, , drop = F],
